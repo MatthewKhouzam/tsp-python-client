@@ -63,7 +63,7 @@ if __name__=="__main__":
     parser.add_argument("--list-traces", dest="list_traces",  action='store_true',  help="List all open traces on the server")
     parser.add_argument("--list-trace", dest="list_trace", help="Get details on the given trace", metavar="UUID")
     parser.add_argument("--list-outputs", dest="list_outputs", help="Gets details on the given trace", metavar="UUID")
-    parser.add_argument("--get-tree", dest="get_tree", help="Gets the tree of an output", metavar="OUTPUT_ID")
+    parser.add_argument("--get-tg-tree", dest="get_tg_tree", help="Gets the time graph tree of an output", metavar="OUTPUT_ID")
     parser.add_argument("--uuid", dest="uuid", help="The UUID of a trace")
 
     options = parser.parse_args()
@@ -122,15 +122,15 @@ if __name__=="__main__":
             else:
                 sys.exit(1)
      
-        if (options.get_tree):
+        if (options.get_tg_tree):
             if options.uuid is not None:
-                response = tsp_client.fetch_timegraph_tree(options.uuid, options.get_tree)
+                response = tsp_client.fetch_timegraph_tree(options.uuid, options.get_tg_tree)
                 if response.status_code == 200:
                     tree = response.model.model
      
                     entries = tree.entries
      
-                    if (options.get_tree == "org.eclipse.tracecompass.internal.analysis.profiling.core.callgraph.callgraphanalysis.statistics"):
+                    if (options.get_tg_tree == "org.eclipse.tracecompass.internal.analysis.profiling.core.callgraph.callgraphanalysis.statistics"):
                         print('  {:>60}\t{:>14}\t{:>14}\t{:>14}\t{:>14}\t{:>14}\t{:>14}'.format("Label", "Minimum", "Maximum", "Mean", "Std Dev", "Total", "Count"))
                         for e in entries:
                             labels = e.labels
